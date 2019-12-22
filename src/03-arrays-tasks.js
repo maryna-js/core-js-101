@@ -576,8 +576,10 @@ function group(/* array, keySelector, valueSelector */) {
  *   [[1, 2], [3, 4], [5, 6]], (x) => x     =>   [ 1, 2, 3, 4, 5, 6 ]
  *   ['one','two','three'], x=>x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
-function selectMany(/* arr, childrenSelector */) {
-  throw new Error('Not implemented');
+function selectMany(arr, childrenSelector) {
+  const array = [];
+  arr.map((elem) => array.push(...childrenSelector(elem)));
+  return array;
 }
 
 
@@ -593,8 +595,8 @@ function selectMany(/* arr, childrenSelector */) {
  *   ['one','two','three'], [2]       => 'three'  (arr[2])
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
-function getElementByIndexes(/* arr, indexes */) {
-  throw new Error('Not implemented');
+function getElementByIndexes(arr, indexes) {
+  return indexes.reduce((array, item) => array[item], arr);
 }
 
 
@@ -616,8 +618,19 @@ function getElementByIndexes(/* arr, indexes */) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  let array;
+
+  const head = arr.slice(0, arr.length / 2);
+  const tail = arr.slice(-arr.length / 2);
+
+  if (arr.length > 1 && arr.length % 2 !== 0) {
+    array = [...tail, arr[Math.floor(arr.length / 2)], ...head];
+    return array;
+  }
+
+  array = [...tail, ...head];
+  return array;
 }
 
 
