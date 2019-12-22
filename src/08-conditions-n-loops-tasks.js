@@ -270,7 +270,7 @@ function reverseInteger(num) {
 /**
  * Validates the CCN (credit card number) and return true if CCN is valid
  * and false otherwise.
- *
+ *+-
  * See algorithm here : https://en.wikipedia.org/wiki/Luhn_algorithm
  *
  * @param {number} cnn
@@ -287,8 +287,25 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  let sum = 0;
+  const value = ccn.toString();
+
+  for (let i = 0; i < value.length; i += 1) {
+    let cardNum = parseInt(value[i], 10);
+
+    if ((value.length - i) % 2 === 0) {
+      cardNum *= 2;
+
+      if (cardNum > 9) {
+        cardNum -= 9;
+      }
+    }
+
+    sum += cardNum;
+  }
+
+  return sum % 10 === 0;
 }
 
 /**
@@ -305,8 +322,12 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  const str = num.toString();
+  const arr = str.split('');
+  const arrSum = arr.reduce((a, b) => Number(a) + Number(b));
+  const arrSecond = arrSum.toString().split('');
+  return arrSecond.reduce((a, b) => Number(a) + Number(b));
 }
 
 
@@ -394,8 +415,15 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/webalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  let value = pathes[0];
+  for (let i = 1; i < pathes.length; i += 1) {
+    for (let j = 0; j < value.length; j += 1) {
+      if (value[j] !== pathes[i][j]) value = value.substring(0, j);
+    }
+  }
+
+  return value.substring(0, value.lastIndexOf('/') + 1);
 }
 
 
